@@ -153,7 +153,7 @@ button,
 }
 
 .light {
-  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  background: linear-gradient(135deg, #f0f4f828, #e2e8f01f);
   color: #1f2937;
 }
 
@@ -371,4 +371,10 @@ button,
 }
 .light footer i {
   color: #f5f5f5;
+}
+.light .absolute.inset-0.bg-gradient-to-br.from-gray-900.via-blue-900\/20.to-gray-900{
+       background: linear-gradient(135deg, #f1f5f928, #f1f5f928, #f1f5f928) !important;
+}
+.light span.text-xs.md\:text-sm.font-medium.bg-black\/40.backdrop-blur-sm.rounded-lg.px-2.md\:px-3.py-1.inline-block{
+    background-color: #f5f5f5 !important;
 }
