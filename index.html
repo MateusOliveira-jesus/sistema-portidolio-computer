@@ -460,7 +460,7 @@
         </div>
 
         <!-- Portfolio Folder -->
-        <div
+        <!-- <div
           class="flex flex-col items-start cursor-pointer folder-icon clickable desktop-icon-wrapper"
           @click="openApp('portfolio')"
         >
@@ -473,7 +473,7 @@
             class="text-xs md:text-sm font-medium bg-black/40 backdrop-blur-sm rounded-lg px-2 md:px-3 py-1 inline-block"
             >Portfólio</span
           >
-        </div>
+        </div> -->
 
         <!-- Experience Folder -->
         <div
@@ -750,7 +750,7 @@
             </div>
 
             <!-- Portfolio Window - Responsive -->
-            <div v-else-if="window.appId === 'portfolio'">
+            <!-- <div v-else-if="window.appId === 'portfolio'">
               <div class="text-center mb-8 md:mb-12">
                 <div
                   class="w-40 h-40 md:w-56 md:h-56 rounded-full border-4 border-cyan-500 mx-auto mb-6 md:mb-8 shadow-2xl bg-gray-700 flex items-center justify-center"
@@ -817,7 +817,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- Experience Window - Responsive -->
             <div v-else-if="window.appId === 'experience'">
@@ -1526,7 +1526,7 @@
           </div>
           <span class="text-xs">LinkedIn</span>
         </button>
-        <button
+        <!-- <button
           @click="openApp('portfolio')"
           class="p-4 bg-gray-800/50 rounded-xl flex flex-col items-start clickable"
         >
@@ -1536,7 +1536,7 @@
             <i class="fas fa-folder text-xl text-white"></i>
           </div>
           <span class="text-xs">Portfólio</span>
-        </button>
+        </button> -->
         <button
           @click="openApp('experience')"
           class="p-4 bg-gray-800/50 rounded-xl flex flex-col items-start clickable"
@@ -1627,11 +1627,11 @@
                 icon: "fab fa-linkedin",
                 bgColor: "bg-gradient-to-br from-blue-600 to-blue-800",
               },
-              portfolio: {
-                title: "Portfólio",
-                icon: "fas fa-folder",
-                bgColor: "bg-gradient-to-br from-cyan-500 to-cyan-700",
-              },
+              // portfolio: {
+              //   title: "Portfólio",
+              //   icon: "fas fa-folder",
+              //   bgColor: "bg-gradient-to-br from-cyan-500 to-cyan-700",
+              // },
               experience: {
                 title: "Experiência",
                 icon: "fas fa-briefcase",
