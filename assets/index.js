@@ -16,12 +16,7 @@ createApp({
         url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
         opacity: 40
       },
-      {
-        id: 3,
-        name: "Abstrato",
-        url: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&q=80",
-        opacity: 25
-      },
+    
       {
         id: 4,
         name: "Escritório",
