@@ -10,385 +10,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <style>
-      * {
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-      body {
-        font-family: "Segoe UI", system-ui, sans-serif;
-        overflow: hidden;
-        transition: background-color 0.3s ease;
-      }
-      .window {
-        transition: all 0.3s ease;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      }
-      .light .window {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      }
-      .taskbar-icon.active {
-        background: linear-gradient(
-          135deg,
-          rgba(59, 130, 246, 0.3),
-          rgba(14, 165, 233, 0.3)
-        );
-      }
-      .light .taskbar-icon.active {
-        background: linear-gradient(
-          135deg,
-          rgba(59, 130, 246, 0.15),
-          rgba(14, 165, 233, 0.15)
-        );
-      }
-      .skill-bar {
-        height: 10px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        overflow: hidden;
-      }
-      .light .skill-bar {
-        background: rgba(0, 0, 0, 0.1);
-      }
-      .skill-progress {
-        height: 100%;
-        background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-        border-radius: 10px;
-        transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 10px;
-      }
-      .light ::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.05);
-      }
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #0ea5e9, #3b82f6);
-        border-radius: 10px;
-      }
-      .folder-icon {
-        transition: all 0.2s ease;
-      }
-      .folder-icon:hover {
-        transform: translateY(-5px) scale(1.05);
-      }
-      .context-menu {
-        animation: fadeIn 0.15s ease-out;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      /* Mobile optimizations */
-      @media (max-width: 768px) {
-        .window {
-          border-radius: 16px;
-          width: 95vw !important;
-          height: 85vh !important;
-          left: 2.5vw !important;
-          top: 5vh !important;
-          max-width: 95vw;
-          max-height: 85vh;
-        }
-
-        .desktop-icon {
-          width: 70px !important;
-          height: 70px !important;
-        }
-
-        .desktop-icon i {
-          font-size: 28px !important;
-        }
-
-        .desktop-icon span {
-          font-size: 11px !important;
-          padding: 2px 4px;
-        }
-
-        .mobile-taskbar {
-          padding: 10px;
-        }
-
-        .mobile-taskbar button {
-          padding: 10px;
-          min-height: 44px;
-          min-width: 44px;
-        }
-
-        /* Garantir que os botões sejam clicáveis */
-        .clickable {
-          cursor: pointer;
-          touch-action: manipulation;
-        }
-
-        /* Melhorar área de toque para ícones do desktop */
-        .desktop-icon-wrapper {
-          padding: 8px;
-          margin: -8px;
-        }
-      }
-
-      /* Tablet optimizations */
-      @media (min-width: 769px) and (max-width: 1024px) {
-        .window {
-          width: 90vw !important;
-          height: 80vh !important;
-          left: 5vw !important;
-          top: 10vh !important;
-        }
-      }
-
-      /* Desktop */
-      @media (min-width: 1025px) {
-        .window {
-          min-width: 400px;
-          min-height: 300px;
-        }
-      }
-
-      /* Touch-friendly buttons */
-      button,
-      .clickable {
-        min-height: 44px;
-        min-width: 44px;
-      }
-
-      /* Light theme specific styles - Mantendo cores vibrantes */
-      .light {
-        background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
-        color: #1f2937;
-      }
-
-      .light .window {
-        background: rgba(255, 255, 255, 0.98);
-        border: 1px solid rgba(209, 213, 219, 0.6);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-
-      .light .bg-gray-800,
-      .light .bg-gray-900 {
-        background-color: #f8fafc;
-      }
-
-      .light .bg-gray-700\/30,
-      .light .bg-gray-700\/50,
-      .light .bg-gray-800\/50 {
-        background-color: rgba(248, 250, 252, 0.9);
-        border: 1px solid rgba(226, 232, 240, 0.6);
-      }
-
-      .light .text-white {
-        color: #1f2937;
-      }
-
-      .light .text-gray-300 {
-        color: #4b5563;
-      }
-
-      .light .text-gray-400 {
-        color: #6b7280;
-      }
-
-      .light .border-gray-700 {
-        border-color: #d1d5db;
-      }
-
-      .light .hover\:bg-gray-700:hover {
-        background-color: #e5e7eb;
-      }
-
-      /* Backgrounds dos gradientes no light mode - mantendo cores vivas mas mais claras */
-      .light .bg-gradient-to-br.from-gray-700\/50.to-gray-800\/50 {
-        background: linear-gradient(
-          135deg,
-          rgba(248, 250, 252, 0.9),
-          rgba(241, 245, 249, 0.9)
-        );
-        border: 1px solid rgba(226, 232, 240, 0.5);
-      }
-
-      /* Manter cores vibrantes nos ícones e elementos */
-      .light .text-cyan-400,
-      .light .text-cyan-500 {
-        color: #06b6d4 !important;
-      }
-
-      .light .text-blue-500 {
-        color: #3b82f6 !important;
-      }
-
-      .light .text-green-500 {
-        color: #10b981 !important;
-      }
-
-      .light .text-purple-500 {
-        color: #8b5cf6 !important;
-      }
-
-      .light .text-yellow-500 {
-        color: #f59e0b !important;
-      }
-
-      .light .text-red-500 {
-        color: #ef4444 !important;
-      }
-
-      .light .text-pink-500 {
-        color: #ec4899 !important;
-      }
-
-      /* Fundos dos ícones no light mode - mais suaves mas ainda coloridos */
-      .light .bg-gradient-to-br.from-blue-600.to-blue-800 {
-        background: linear-gradient(135deg, #60a5fa, #3b82f6) !important;
-      }
-
-      .light .bg-gradient-to-br.from-cyan-500.to-cyan-700 {
-        background: linear-gradient(135deg, #22d3ee, #06b6d4) !important;
-      }
-
-      .light .bg-gradient-to-br.from-green-500.to-green-700 {
-        background: linear-gradient(135deg, #34d399, #10b981) !important;
-      }
-
-      .light .bg-gradient-to-br.from-purple-500.to-purple-700 {
-        background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
-      }
-
-      .light .bg-gradient-to-br.from-yellow-500.to-yellow-700 {
-        background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
-      }
-
-      .light .bg-gradient-to-br.from-pink-500.to-pink-700 {
-        background: linear-gradient(135deg, #f472b6, #ec4899) !important;
-      }
-
-      .light .bg-gradient-to-br.from-red-500.to-red-700 {
-        background: linear-gradient(135deg, #f87171, #ef4444) !important;
-      }
-
-      .light .bg-cyan-600\/20 {
-        background-color: rgba(6, 182, 212, 0.2) !important;
-      }
-
-      .light .bg-green-600\/20 {
-        background-color: rgba(16, 185, 129, 0.2) !important;
-      }
-
-      .light .bg-blue-600\/20 {
-        background-color: rgba(59, 130, 246, 0.2) !important;
-      }
-
-      .light .bg-purple-600\/20 {
-        background-color: rgba(139, 92, 246, 0.2) !important;
-      }
-
-      .light .bg-yellow-600\/20 {
-        background-color: rgba(245, 158, 11, 0.2) !important;
-      }
-
-      .light .bg-red-600\/20 {
-        background-color: rgba(239, 68, 68, 0.2) !important;
-      }
-
-      .light .bg-pink-600\/20 {
-        background-color: rgba(236, 72, 153, 0.2) !important;
-      }
-
-      /* Background do desktop no light mode */
-      .light
-        .absolute.inset-0.bg-gradient-to-br.from-gray-900.via-blue-900\/20.to-gray-900 {
-        background: linear-gradient(
-          135deg,
-          #e2e8f0,
-          #f1f5f9,
-          #e2e8f0
-        ) !important;
-      }
-
-      .light .bg-black\/40 {
-        background-color: rgba(0, 0, 0, 0.1) !important;
-        backdrop-filter: blur(8px);
-      }
-
-      .light .bg-black\/40 span {
-        color: #374151 !important;
-        font-weight: 500;
-      }
-
-      /* Mobile menu styles */
-      .mobile-menu {
-        transform: translateY(100%);
-        transition: transform 0.3s ease;
-        box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.1);
-      }
-
-      .light .mobile-menu {
-        background: rgba(255, 255, 255, 0.98);
-        border-top: 1px solid rgba(209, 213, 219, 0.8);
-      }
-
-      .mobile-menu.open {
-        transform: translateY(0);
-      }
-
-      /* Melhorar visibilidade no light mode */
-      .light .window-header {
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9) !important;
-        border-bottom: 1px solid #e5e7eb !important;
-      }
-
-      .light .skill-progress {
-        background: linear-gradient(90deg, #06b6d4, #3b82f6) !important;
-      }
-
-      /* Ajustes para texto no light mode */
-      .light a {
-        color: #3b82f6 !important;
-      }
-
-      .light a:hover {
-        color: #1d4ed8 !important;
-      }
-
-      /* Melhorar feedback tátil */
-      .desktop-icon-wrapper {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        user-select: none;
-      }
-
-      .desktop-icon-wrapper:active {
-        opacity: 0.7;
-        transform: scale(0.98);
-      }
-
-      .clickable {
-        transition: transform 0.1s ease, opacity 0.1s ease;
-      }
-
-      .clickable:active {
-        opacity: 0.8;
-        transform: scale(0.96);
-      }
-
-      /* Prevenir seleção de texto durante toque */
-      * {
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        -webkit-tap-highlight-color: transparent;
-      }
-    </style>
+   <link rel="stylesheet" href="assets/index.css">
   </head>
   <body class="bg-gray-900 text-white" id="app">
     <!-- Context Menu -->
@@ -458,23 +80,6 @@
             >LinkedIn</span
           >
         </div>
-
-        <!-- Portfolio Folder -->
-        <!-- <div
-          class="flex flex-col items-start cursor-pointer folder-icon clickable desktop-icon-wrapper"
-          @click="openApp('portfolio')"
-        >
-          <div
-            class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-2xl flex items-center justify-center mb-2 md:mb-1 shadow-lg desktop-icon"
-          >
-            <i class="fas fa-folder text-2xl md:text-4xl text-white"></i>
-          </div>
-          <span
-            class="text-xs md:text-sm font-medium bg-black/40 backdrop-blur-sm rounded-lg px-2 md:px-3 py-1 inline-block"
-            >Portfólio</span
-          >
-        </div> -->
-
         <!-- Experience Folder -->
         <div
           class="flex flex-col items-start cursor-pointer folder-icon clickable desktop-icon-wrapper"
@@ -556,877 +161,545 @@
         </div>
       </div>
 
-      <!-- Windows -->
-      <div>
+     <!-- Windows -->
+<div>
+  <div
+    v-for="win in windows"
+    :key="win.id"
+    class="window fixed bg-gray-800/95 backdrop-blur-lg rounded-xl border border-gray-700/50 shadow-2xl overflow-hidden"
+    :class="{ 
+      'hidden': win.minimized, 
+      'maximized': win.maximized
+    }"
+    :style="{ 
+      top: win.y + 'px', 
+      left: win.x + 'px', 
+      width: win.width + 'px', 
+      height: win.height + 'px', 
+      zIndex: win.zIndex 
+    }"
+  >
+    <!-- Window Header -->
+    <div
+      class="window-header bg-gradient-to-r from-gray-900 to-gray-800 px-3 md:px-4 py-2 md:py-3 flex justify-between items-center border-b border-gray-700 cursor-move"
+      @touchstart="startTouchDrag(win, $event)"
+      @mousedown="startDrag(win, $event)"
+    >
+      <div class="flex items-center space-x-2 md:space-x-3">
         <div
-          v-for="window in windows"
-          :key="window.id"
-          class="window fixed bg-gray-800/95 backdrop-blur-lg rounded-xl border border-gray-700/50 shadow-2xl overflow-hidden"
-          :class="{ 
-                     'hidden': window.minimized, 
-                     'maximized': window.maximized,
-                    
-                 }"
-          :style="{ 
-                     top: window.y + 'px', 
-                     left: window.x + 'px', 
-                     width: window.width + 'px', 
-                     height: window.height + 'px', 
-                     zIndex: window.zIndex 
-                 }"
+          class="w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center shadow-lg"
+          :class="win.iconBgColor"
         >
-          <!-- Window Header -->
-          <div
-            class="window-header bg-gradient-to-r from-gray-900 to-gray-800 px-3 md:px-4 py-2 md:py-3 flex justify-between items-center border-b border-gray-700 cursor-move"
-            @touchstart="startTouchDrag(window, $event)"
-            @mousedown="startDrag(window, $event)"
-          >
-            <div class="flex items-center space-x-2 md:space-x-3">
-              <div
-                class="w-6 h-6 md:w-8 md:h-8 rounded-lg flex items-center justify-center shadow-lg"
-                :class="window.iconBgColor"
-              >
-                <i
-                  :class="[window.icon, 'text-white text-xs md:text-base']"
-                ></i>
-              </div>
-              <span
-                class="font-semibold text-sm md:text-lg truncate max-w-[150px] md:max-w-none"
-                >{{ window.title }}</span
-              >
+          <i :class="[win.icon, 'text-white text-xs md:text-base']"></i>
+        </div>
+        <span class="font-semibold text-sm md:text-lg truncate max-w-[150px] md:max-w-none">
+          {{ win.title }}
+        </span>
+      </div>
+      <div class="flex space-x-1">
+        <button
+          @click="minimizeWindow(win.id)"
+          class="p-1 md:p-2 rounded-lg hover:bg-gray-700 transition-colors clickable"
+        >
+          <i class="fas fa-minus text-xs md:text-base"></i>
+        </button>
+        <button
+          @click="maximizeWindow(win.id)"
+          class="p-1 md:p-2 rounded-lg hover:bg-gray-700 transition-colors clickable hidden md:block"
+        >
+          <i class="fas fa-square text-xs md:text-base"></i>
+        </button>
+        <button
+          @click="closeWindow(win.id)"
+          class="p-1 md:p-2 rounded-lg hover:bg-red-600/30 transition-colors clickable"
+        >
+          <i class="fas fa-times text-xs md:text-base"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Window Content -->
+    <div class="p-3 md:p-6 h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] overflow-auto">
+      <!-- LinkedIn Window - Responsive -->
+      <div v-if="win.appId === 'linkedin'">
+        <div class="flex flex-col lg:flex-row items-start mb-6 md:mb-8 gap-4 md:gap-8">
+          <div class="flex-shrink-0 mx-auto md:mx-0">
+            <div class="w-32 h-32 md:w-48 md:h-48 rounded-2xl border-4 border-white/20 shadow-2xl bg-gray-700 flex items-center justify-center">
+              <img src="imagem-mateus.jfif" alt="" />
             </div>
-            <div class="flex space-x-1">
-              <button
-                @click="minimizeWindow(window.id)"
-                class="p-1 md:p-2 rounded-lg hover:bg-gray-700 transition-colors clickable"
-              >
-                <i class="fas fa-minus text-xs md:text-base"></i>
-              </button>
-              <button
-                @click="maximizeWindow(window.id)"
-                class="p-1 md:p-2 rounded-lg hover:bg-gray-700 transition-colors clickable hidden md:block"
-              >
-                <i class="fas fa-square text-xs md:text-base"></i>
-              </button>
-              <button
-                @click="closeWindow(window.id)"
-                class="p-1 md:p-2 rounded-lg hover:bg-red-600/30 transition-colors clickable"
-              >
-                <i class="fas fa-times text-xs md:text-base"></i>
-              </button>
+          </div>
+          <div class="flex-grow">
+            <h1 class="text-2xl md:text-4xl font-bold mb-2 text-center md:text-left">
+              Mateus Oliveira de Jesus
+            </h1>
+            <p class="text-sm md:text-xl text-gray-300 mb-4 md:mb-6 text-center md:text-left">
+              Full Stack Developer | PHP | JavaScript | MySQL | Laravel |
+              Filament | Docker | Vue.js | Oracle | Gitlab | APIs RESTful
+              | Performance & SEO
+            </p>
+
+           
+          </div>
+        </div>
+
+        <div class="bg-gray-700/30 p-4 md:p-6 rounded-2xl mb-6 md:mb-8 backdrop-blur-sm">
+          <h2 class="text-lg md:text-2xl font-bold mb-3 md:mb-4 flex items-center">
+            <i class="fas fa-info-circle mr-2 md:mr-3 text-cyan-500"></i>Sobre
+          </h2>
+          <p class="text-sm md:text-base text-gray-300 leading-relaxed">
+            Sou desenvolvedor full stack na Universidade Santo Amaro
+            (Unisa), onde contribuo para a criação de aplicações web
+            utilizando PHP, Laravel, Filament, Vue.js e bancos de dados
+            Oracle.
+          </p>
+        </div>
+
+        <div class="bg-gray-700/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm">
+          <h2 class="text-lg md:text-2xl font-bold mb-3 md:mb-6 flex items-center">
+            <i class="fas fa-star mr-2 md:mr-3 text-yellow-500"></i>Principais Competências
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm">JavaScript</span>
+            <span class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm">SQL</span>
+            <span class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm">HTML5</span>
+            <span class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm">PHP</span>
+            <span class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm">CSS</span>
+            <span class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm">Laravel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience Window - Responsive -->
+      <div v-else-if="win.appId === 'experience'">
+        <h1 class="text-xl md:text-3xl font-bold mb-2 flex items-center">
+          <i class="fas fa-history mr-2 md:mr-3 text-blue-500"></i>Experiência Profissional
+        </h1>
+        <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
+          Histórico completo da minha trajetória
+        </p>
+
+        <div class="space-y-6 md:space-y-8">
+          <!-- Current Job -->
+          <div class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm border-l-4 border-cyan-500">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4">
+              <div class="flex-1">
+                <h2 class="text-xl md:text-2xl font-bold">
+                  Desenvolvedor Full Stack
+                </h2>
+                <p class="text-lg md:text-xl text-gray-300 mt-1">
+                  Universidade Santo Amaro - Unisa
+                </p>
+              </div>
+              <div class="sm:text-right">
+                <p class="text-gray-400 text-sm md:text-base">
+                  agosto 2025 - Atual
+                </p>
+                <span class="inline-block text-xs md:text-sm px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full mt-1">
+                  5 meses
+                </span>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4 text-sm md:text-base">
+              Desenvolvimento de sistemas internos utilizando Laravel
+              Filament, Vue.js e bancos de dados Oracle. Criação e
+              manutenção de aplicações web para processos administrativos
+              da universidade.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Docker</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">PHP</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Laravel</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Vue.js</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Oracle</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">GitLab</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">APIs RESTful</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Filament</span>
             </div>
           </div>
 
-          <!-- Window Content -->
-          <div
-            class="p-3 md:p-6 h-[calc(100%-3rem)] md:h-[calc(100%-3.5rem)] overflow-auto"
-          >
-            <!-- LinkedIn Window - Responsive -->
-            <div v-if="window.appId === 'linkedin'">
-              <div
-                class="flex flex-col lg:flex-row items-start mb-6 md:mb-8 gap-4 md:gap-8"
-              >
-                <div class="flex-shrink-0 mx-auto md:mx-0">
-                  <div
-                    class="w-32 h-32 md:w-48 md:h-48 rounded-2xl border-4 border-white/20 shadow-2xl bg-gray-700 flex items-center justify-center"
-                  >
-                    <img src="imagem-mateus.jfif" alt="" />
-                  </div>
-                </div>
-                <div class="flex-grow">
-                  <h1
-                    class="text-2xl md:text-4xl font-bold mb-2 text-center md:text-left"
-                  >
-                    Mateus Oliveira de Jesus
-                  </h1>
-                  <p
-                    class="text-sm md:text-xl text-gray-300 mb-4 md:mb-6 text-center md:text-left"
-                  >
-                    Full Stack Developer | PHP | JavaScript | MySQL | Laravel |
-                    Filament | Docker | Vue.js | Oracle | Gitlab | APIs RESTful
-                    | Performance & SEO
-                  </p>
-
-                  <div
-                    class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-6 md:mb-8"
-                  >
-                    <div
-                      class="bg-gray-700/50 p-2 md:p-4 rounded-xl text-center backdrop-blur-sm"
-                    >
-                      <div class="text-xl md:text-3xl font-bold text-cyan-500">
-                        24
-                      </div>
-                      <div class="text-xs md:text-sm text-gray-400 mt-1">
-                        Visualizações
-                      </div>
-                    </div>
-                    <div
-                      class="bg-gray-700/50 p-2 md:p-4 rounded-xl text-center backdrop-blur-sm"
-                    >
-                      <div class="text-xl md:text-3xl font-bold text-cyan-500">
-                        94
-                      </div>
-                      <div class="text-xs md:text-sm text-gray-400 mt-1">
-                        Impressões
-                      </div>
-                    </div>
-                    <div
-                      class="bg-gray-700/50 p-2 md:p-4 rounded-xl text-center backdrop-blur-sm"
-                    >
-                      <div class="text-xl md:text-3xl font-bold text-cyan-500">
-                        7
-                      </div>
-                      <div class="text-xs md:text-sm text-gray-400 mt-1">
-                        Pesquisas
-                      </div>
-                    </div>
-                    <div
-                      class="bg-gray-700/50 p-2 md:p-4 rounded-xl text-center backdrop-blur-sm"
-                    >
-                      <div class="text-xl md:text-3xl font-bold text-cyan-500">
-                        953
-                      </div>
-                      <div class="text-xs md:text-sm text-gray-400 mt-1">
-                        Seguidores
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="bg-gray-700/30 p-4 md:p-6 rounded-2xl mb-6 md:mb-8 backdrop-blur-sm"
-              >
-                <h2
-                  class="text-lg md:text-2xl font-bold mb-3 md:mb-4 flex items-center"
-                >
-                  <i class="fas fa-info-circle mr-2 md:mr-3 text-cyan-500"></i
-                  >Sobre
+          <!-- Doutores da Web -->
+          <div class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4">
+              <div class="flex-1">
+                <h2 class="text-xl md:text-2xl font-bold">
+                  Desenvolvedor Fullstack PHP Pl.
                 </h2>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">
-                  Sou desenvolvedor full stack na Universidade Santo Amaro
-                  (Unisa), onde contribuo para a criação de aplicações web
-                  utilizando PHP, Laravel, Filament, Vue.js e bancos de dados
-                  Oracle.
+                <p class="text-lg md:text-xl text-gray-300 mt-1">
+                  Doutores da Web
                 </p>
               </div>
+              <div class="sm:text-right">
+                <p class="text-gray-400 text-sm md:text-base">
+                  março 2025 - julho 2025
+                </p>
+                <span class="inline-block text-xs md:text-sm px-3 py-1 bg-green-500/20 text-green-400 rounded-full mt-1">
+                  5 meses
+                </span>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4 text-sm md:text-base">
+              Desenvolvimento de aplicações web utilizando PHP, Laravel,
+              HTML, CSS, JavaScript e Bootstrap. Implementação de testes
+              automatizados com Cypress e testes manuais com Postman para
+              validação de APIs.
+            </p>
+            <div class="mb-4">
+              <h3 class="font-semibold mb-2 text-sm md:text-base">
+                Principais Responsabilidades:
+              </h3>
+              <ul class="list-disc list-inside text-gray-300 space-y-1 text-sm md:text-base">
+                <li>
+                  Integração de sistemas com bancos de dados MySQL e
+                  criação de APIs RESTful
+                </li>
+                <li>
+                  Participação ativa em squads ágeis utilizando Scrum e
+                  Kanban
+                </li>
+                <li>
+                  Otimização de aplicações para performance, SEO e
+                  usabilidade
+                </li>
+              </ul>
+            </div>
+          </div>
 
-              <div
-                class="bg-gray-700/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm"
-              >
-                <h2
-                  class="text-lg md:text-2xl font-bold mb-3 md:mb-6 flex items-center"
-                >
-                  <i class="fas fa-star mr-2 md:mr-3 text-yellow-500"></i
-                  >Principais Competências
+          <!-- Doutores da Web Jr -->
+          <div class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4">
+              <div class="flex-1">
+                <h2 class="text-xl md:text-2xl font-bold">
+                  Desenvolvedor Fullstack PHP Jr.
                 </h2>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm"
-                    >JavaScript</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm"
-                    >SQL</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm"
-                    >HTML5</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm"
-                    >PHP</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm"
-                    >CSS</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-600/30 rounded-full text-xs md:text-sm"
-                    >Laravel</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <!-- Portfolio Window - Responsive -->
-            <!-- <div v-else-if="window.appId === 'portfolio'">
-              <div class="text-center mb-8 md:mb-12">
-                <div
-                  class="w-40 h-40 md:w-56 md:h-56 rounded-full border-4 border-cyan-500 mx-auto mb-6 md:mb-8 shadow-2xl bg-gray-700 flex items-center justify-center"
-                >
-                  <i class="fas fa-user text-6xl md:text-8xl text-gray-300"></i>
-                </div>
-                <h1 class="text-2xl md:text-5xl font-bold mb-3 md:mb-4">
-                  Mateus Oliveira de Jesus
-                </h1>
-                <p class="text-lg md:text-2xl text-cyan-400 mb-2">
-                  Full Stack Developer
-                </p>
-                <p class="text-sm md:text-base text-gray-400">
-                  PHP | Laravel | Vue.js | Docker | Oracle
+                <p class="text-lg md:text-xl text-gray-300 mt-1">
+                  Doutores da Web
                 </p>
               </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                <div
-                  class="bg-gradient-to-br from-gray-700/50 to-gray-800/50 p-4 md:p-8 rounded-2xl backdrop-blur-sm"
-                >
-                  <h2
-                    class="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center"
-                  >
-                    <i
-                      class="fas fa-graduation-cap mr-2 md:mr-3 text-green-500"
-                    ></i
-                    >Formação Acadêmica
-                  </h2>
-                  <div class="space-y-4 md:space-y-6">
-                    <div>
-                      <h3 class="text-base md:text-xl font-semibold mb-2">
-                        Análise e Desenvolvimento de Sistemas
-                      </h3>
-                      <p class="text-sm md:text-base text-gray-300 mb-1">
-                        Estácio
-                      </p>
-                      <p class="text-cyan-400 text-sm md:text-base">
-                        jan 2023 - nov 2025
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="bg-gradient-to-br from-gray-700/50 to-gray-800/50 p-4 md:p-8 rounded-2xl backdrop-blur-sm"
-                >
-                  <h2
-                    class="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center"
-                  >
-                    <i class="fas fa-bullhorn mr-2 md:mr-3 text-purple-500"></i
-                    >Destaques
-                  </h2>
-                  <div class="space-y-4 md:space-y-6">
-                    <div class="p-3 md:p-4 bg-gray-600/30 rounded-xl">
-                      <h3 class="font-semibold mb-2 text-sm md:text-base">
-                        Portfólio Vue.js + Tailwind CSS
-                      </h3>
-                      <p class="text-xs md:text-sm text-gray-300">
-                        Portfólio interativo criado para aprender Vue.js na
-                        prática
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div class="sm:text-right">
+                <p class="text-gray-400 text-sm md:text-base">
+                  nov 2023 - mar 2025
+                </p>
+                <span class="inline-block text-xs md:text-sm px-3 py-1 bg-green-500/20 text-green-400 rounded-full mt-1">
+                  1 ano 5 meses
+                </span>
               </div>
-            </div> -->
+            </div>
+            <p class="text-gray-300 mb-4 text-sm md:text-base">
+              Desenvolvimento e manutenção de sites com HTML5, CSS3,
+              JavaScript e PHP. Trabalho com bancos de dados SQL e
+              manipulação de JSON.
+            </p>
+            <div class="mb-4">
+              <h3 class="font-semibold mb-2 text-sm md:text-base">
+                Responsabilidades:
+              </h3>
+              <ul class="list-disc list-inside text-gray-300 space-y-1 text-sm md:text-base">
+                <li>
+                  Implementação de funcionalidades sob orientação de
+                  desenvolvedores sêniores
+                </li>
+                <li>Correção de bugs e melhorias de layout responsivo</li>
+                <li>
+                  Validação de código seguindo padrões W3C e boas práticas
+                  de SEO
+                </li>
+                <li>
+                  Uso de expressões regulares (Regex) para otimização de
+                  código
+                </li>
+              </ul>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">CSS</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Front-end</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">HTML5</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">JavaScript</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">PHP</span>
+            </div>
+          </div>
 
-            <!-- Experience Window - Responsive -->
-            <div v-else-if="window.appId === 'experience'">
-              <h1 class="text-xl md:text-3xl font-bold mb-2 flex items-center">
-                <i class="fas fa-history mr-2 md:mr-3 text-blue-500"></i
-                >Experiência Profissional
-              </h1>
-              <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
-                Histórico completo da minha trajetória
-              </p>
+          <!-- Magazine Luiza -->
+          <div class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4">
+              <div class="flex-1">
+                <h2 class="text-xl md:text-2xl font-bold">
+                  Assistente de Vendas
+                </h2>
+                <p class="text-lg md:text-xl text-gray-300 mt-1">
+                  Magazine Luiza
+                </p>
+              </div>
+              <div class="sm:text-right">
+                <p class="text-gray-400 text-sm md:text-base">
+                  nov 2020 - fev 2023
+                </p>
+                <span class="inline-block text-xs md:text-sm px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full mt-1">
+                  2 anos 4 meses
+                </span>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4 text-sm md:text-base">
+              Como Assistente de Vendas com experiência em logística,
+              minha rotina consistia em receber entregas de abastecimento,
+              gerenciar a importação e exportação de produtos para o
+              estoque, bem como a elaboração de planilhas no Excel para um
+              controle eficaz dos produtos.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Excel</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Logística</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Vendas</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Comunicação</span>
+            </div>
+          </div>
 
-              <div class="space-y-6 md:space-y-8">
-                <!-- Current Job -->
-                <div
-                  class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm border-l-4 border-cyan-500"
-                >
-                  <div
-                    class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4"
-                  >
-                    <div class="flex-1">
-                      <h2 class="text-xl md:text-2xl font-bold">
-                        Desenvolvedor Full Stack
-                      </h2>
-                      <p class="text-lg md:text-xl text-gray-300 mt-1">
-                        Universidade Santo Amaro - Unisa
-                      </p>
-                    </div>
-                    <div class="sm:text-right">
-                      <p class="text-gray-400 text-sm md:text-base">
-                        agosto 2025 - Atual
-                      </p>
-                      <span
-                        class="inline-block text-xs md:text-sm px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full mt-1"
-                        >5 meses</span
-                      >
-                    </div>
-                  </div>
-                  <p class="text-gray-300 mb-4 text-sm md:text-base">
-                    Desenvolvimento de sistemas internos utilizando Laravel
-                    Filament, Vue.js e bancos de dados Oracle. Criação e
-                    manutenção de aplicações web para processos administrativos
-                    da universidade.
-                  </p>
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Docker</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >PHP</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Laravel</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Vue.js</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Oracle</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >GitLab</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >APIs RESTful</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Filament</span
-                    >
-                  </div>
+          <!-- Magazine Luiza - Apprentice -->
+          <div class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4">
+              <div class="flex-1">
+                <h2 class="text-xl md:text-2xl font-bold">
+                  Auxiliar de Escritório (Jovem Aprendiz)
+                </h2>
+                <p class="text-lg md:text-xl text-gray-300 mt-1">
+                  Magazine Luiza
+                </p>
+              </div>
+              <div class="sm:text-right">
+                <p class="text-gray-400 text-sm md:text-base">
+                  mai 2019 - set 2020
+                </p>
+                <span class="inline-block text-xs md:text-sm px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full mt-1">
+                  1 ano 5 meses
+                </span>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4 text-sm md:text-base">
+              Minhas principais responsabilidades como Auxiliar de
+              Escritório consistia em garantir suporte administrativo e
+              operacional para a logística e demais áreas da empresa, com
+              o atendimento telefônico, organização de arquivos, envio de
+              documentos, gestão de planilhas e abastecimento de produtos.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Excel</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Administrativo</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Atendimento</span>
+              <span class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm">Organização</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Window - Responsive -->
+      <div v-else-if="win.appId === 'skills'">
+        <h1 class="text-xl md:text-3xl font-bold mb-2">
+          Habilidades Técnicas
+        </h1>
+        <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
+          Competências e níveis de proficiência
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+          <div>
+            <h2 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center">
+              <i class="fas fa-laptop-code mr-2 md:mr-3 text-green-500"></i>Desenvolvimento
+            </h2>
+            <div class="space-y-4 md:space-y-6">
+              <div v-for="skill in devSkills" :key="skill.name">
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium text-sm md:text-base">{{ skill.name }}</span>
+                  <span class="text-cyan-500 font-semibold text-sm md:text-base">{{ skill.level }}%</span>
                 </div>
-
-                <!-- Doutores da Web -->
-                <div
-                  class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm"
-                >
-                  <div
-                    class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4"
-                  >
-                    <div class="flex-1">
-                      <h2 class="text-xl md:text-2xl font-bold">
-                        Desenvolvedor Fullstack PHP Pl.
-                      </h2>
-                      <p class="text-lg md:text-xl text-gray-300 mt-1">
-                        Doutores da Web
-                      </p>
-                    </div>
-                    <div class="sm:text-right">
-                      <p class="text-gray-400 text-sm md:text-base">
-                        março 2025 - julho 2025
-                      </p>
-                      <span
-                        class="inline-block text-xs md:text-sm px-3 py-1 bg-green-500/20 text-green-400 rounded-full mt-1"
-                        >5 meses</span
-                      >
-                    </div>
-                  </div>
-                  <p class="text-gray-300 mb-4 text-sm md:text-base">
-                    Desenvolvimento de aplicações web utilizando PHP, Laravel,
-                    HTML, CSS, JavaScript e Bootstrap. Implementação de testes
-                    automatizados com Cypress e testes manuais com Postman para
-                    validação de APIs.
-                  </p>
-                  <div class="mb-4">
-                    <h3 class="font-semibold mb-2 text-sm md:text-base">
-                      Principais Responsabilidades:
-                    </h3>
-                    <ul
-                      class="list-disc list-inside text-gray-300 space-y-1 text-sm md:text-base"
-                    >
-                      <li>
-                        Integração de sistemas com bancos de dados MySQL e
-                        criação de APIs RESTful
-                      </li>
-                      <li>
-                        Participação ativa em squads ágeis utilizando Scrum e
-                        Kanban
-                      </li>
-                      <li>
-                        Otimização de aplicações para performance, SEO e
-                        usabilidade
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <!-- Doutores da Web Jr -->
-                <div
-                  class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm"
-                >
-                  <div
-                    class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4"
-                  >
-                    <div class="flex-1">
-                      <h2 class="text-xl md:text-2xl font-bold">
-                        Desenvolvedor Fullstack PHP Jr.
-                      </h2>
-                      <p class="text-lg md:text-xl text-gray-300 mt-1">
-                        Doutores da Web
-                      </p>
-                    </div>
-                    <div class="sm:text-right">
-                      <p class="text-gray-400 text-sm md:text-base">
-                        nov 2023 - mar 2025
-                      </p>
-                      <span
-                        class="inline-block text-xs md:text-sm px-3 py-1 bg-green-500/20 text-green-400 rounded-full mt-1"
-                        >1 ano 5 meses</span
-                      >
-                    </div>
-                  </div>
-                  <p class="text-gray-300 mb-4 text-sm md:text-base">
-                    Desenvolvimento e manutenção de sites com HTML5, CSS3,
-                    JavaScript e PHP. Trabalho com bancos de dados SQL e
-                    manipulação de JSON.
-                  </p>
-                  <div class="mb-4">
-                    <h3 class="font-semibold mb-2 text-sm md:text-base">
-                      Responsabilidades:
-                    </h3>
-                    <ul
-                      class="list-disc list-inside text-gray-300 space-y-1 text-sm md:text-base"
-                    >
-                      <li>
-                        Implementação de funcionalidades sob orientação de
-                        desenvolvedores sêniores
-                      </li>
-                      <li>Correção de bugs e melhorias de layout responsivo</li>
-                      <li>
-                        Validação de código seguindo padrões W3C e boas práticas
-                        de SEO
-                      </li>
-                      <li>
-                        Uso de expressões regulares (Regex) para otimização de
-                        código
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >CSS</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Front-end</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >HTML5</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >JavaScript</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >PHP</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Magazine Luiza -->
-                <div
-                  class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm"
-                >
-                  <div
-                    class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4"
-                  >
-                    <div class="flex-1">
-                      <h2 class="text-xl md:text-2xl font-bold">
-                        Assistente de Vendas
-                      </h2>
-                      <p class="text-lg md:text-xl text-gray-300 mt-1">
-                        Magazine Luiza
-                      </p>
-                    </div>
-                    <div class="sm:text-right">
-                      <p class="text-gray-400 text-sm md:text-base">
-                        nov 2020 - fev 2023
-                      </p>
-                      <span
-                        class="inline-block text-xs md:text-sm px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full mt-1"
-                        >2 anos 4 meses</span
-                      >
-                    </div>
-                  </div>
-                  <p class="text-gray-300 mb-4 text-sm md:text-base">
-                    Como Assistente de Vendas com experiência em logística,
-                    minha rotina consistia em receber entregas de abastecimento,
-                    gerenciar a importação e exportação de produtos para o
-                    estoque, bem como a elaboração de planilhas no Excel para um
-                    controle eficaz dos produtos.
-                  </p>
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Excel</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Logística</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Vendas</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Comunicação</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Magazine Luiza - Apprentice -->
-                <div
-                  class="bg-gradient-to-r from-gray-700/30 to-gray-800/30 p-4 md:p-6 rounded-2xl backdrop-blur-sm"
-                >
-                  <div
-                    class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4"
-                  >
-                    <div class="flex-1">
-                      <h2 class="text-xl md:text-2xl font-bold">
-                        Auxiliar de Escritório (Jovem Aprendiz)
-                      </h2>
-                      <p class="text-lg md:text-xl text-gray-300 mt-1">
-                        Magazine Luiza
-                      </p>
-                    </div>
-                    <div class="sm:text-right">
-                      <p class="text-gray-400 text-sm md:text-base">
-                        mai 2019 - set 2020
-                      </p>
-                      <span
-                        class="inline-block text-xs md:text-sm px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full mt-1"
-                        >1 ano 5 meses</span
-                      >
-                    </div>
-                  </div>
-                  <p class="text-gray-300 mb-4 text-sm md:text-base">
-                    Minhas principais responsabilidades como Auxiliar de
-                    Escritório consistia em garantir suporte administrativo e
-                    operacional para a logística e demais áreas da empresa, com
-                    o atendimento telefônico, organização de arquivos, envio de
-                    documentos, gestão de planilhas e abastecimento de produtos.
-                  </p>
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Excel</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Administrativo</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Atendimento</span
-                    >
-                    <span
-                      class="px-3 py-1 bg-gray-600/50 rounded-full text-xs md:text-sm"
-                      >Organização</span
-                    >
-                  </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: skill.level + '%' }"></div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Skills Window - Responsive -->
-            <div v-else-if="window.appId === 'skills'">
-              <h1 class="text-xl md:text-3xl font-bold mb-2">
-                Habilidades Técnicas
-              </h1>
-              <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
-                Competências e níveis de proficiência
-              </p>
-
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-                <div>
-                  <h2
-                    class="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center"
-                  >
-                    <i
-                      class="fas fa-laptop-code mr-2 md:mr-3 text-green-500"
-                    ></i
-                    >Desenvolvimento
-                  </h2>
-                  <div class="space-y-4 md:space-y-6">
-                    <div v-for="skill in devSkills" :key="skill.name">
-                      <div class="flex justify-between mb-2">
-                        <span class="font-medium text-sm md:text-base"
-                          >{{ skill.name }}</span
-                        >
-                        <span
-                          class="text-cyan-500 font-semibold text-sm md:text-base"
-                          >{{ skill.level }}%</span
-                        >
-                      </div>
-                      <div class="skill-bar">
-                        <div
-                          class="skill-progress"
-                          :style="{ width: skill.level + '%' }"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
+          <div class="mt-6 md:mt-0">
+            <h2 class="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center">
+              <i class="fas fa-database mr-2 md:mr-3 text-purple-500"></i>Banco de Dados & Ferramentas
+            </h2>
+            <div class="space-y-4 md:space-y-6">
+              <div v-for="skill in otherSkills" :key="skill.name">
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium text-sm md:text-base">{{ skill.name }}</span>
+                  <span class="text-cyan-500 font-semibold text-sm md:text-base">{{ skill.level }}%</span>
                 </div>
-
-                <div class="mt-6 md:mt-0">
-                  <h2
-                    class="text-lg md:text-2xl font-bold mb-4 md:mb-6 flex items-center"
-                  >
-                    <i class="fas fa-database mr-2 md:mr-3 text-purple-500"></i
-                    >Banco de Dados & Ferramentas
-                  </h2>
-                  <div class="space-y-4 md:space-y-6">
-                    <div v-for="skill in otherSkills" :key="skill.name">
-                      <div class="flex justify-between mb-2">
-                        <span class="font-medium text-sm md:text-base"
-                          >{{ skill.name }}</span
-                        >
-                        <span
-                          class="text-cyan-500 font-semibold text-sm md:text-base"
-                          >{{ skill.level }}%</span
-                        >
-                      </div>
-                      <div class="skill-bar">
-                        <div
-                          class="skill-progress"
-                          :style="{ width: skill.level + '%' }"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Contact Window - Responsive -->
-            <div v-else-if="window.appId === 'contact'">
-              <h1 class="text-xl md:text-3xl font-bold mb-2">
-                Entre em Contato
-              </h1>
-              <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
-                Vamos conversar sobre oportunidades
-              </p>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                <div class="space-y-4 md:space-y-6">
-                  <div
-                    class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm"
-                  >
-                    <div class="flex items-center mb-3 md:mb-4">
-                      <div
-                        class="w-10 h-10 md:w-12 md:h-12 bg-cyan-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                      >
-                        <i
-                          class="fas fa-envelope text-xl md:text-2xl text-cyan-500"
-                        ></i>
-                      </div>
-                      <div>
-                        <div class="font-bold text-base md:text-lg">E-mail</div>
-                        <a
-                          href="mailto:mateus.oliveira.retiba@gmail.com"
-                          class="text-gray-300 hover:text-cyan-400 transition-colors text-sm md:text-base"
-                        >
-                          mateus.oliveira.retiba@gmail.com
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm"
-                  >
-                    <div class="flex items-center mb-3 md:mb-4">
-                      <div
-                        class="w-10 h-10 md:w-12 md:h-12 bg-green-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                      >
-                        <i
-                          class="fab fa-whatsapp text-xl md:text-2xl text-green-500"
-                        ></i>
-                      </div>
-                      <div>
-                        <div class="font-bold text-base md:text-lg">
-                          WhatsApp
-                        </div>
-                        <a
-                          href="https://wa.me/5511978678459"
-                          target="_blank"
-                          class="text-gray-300 hover:text-green-400 transition-colors text-sm md:text-base"
-                        >
-                          (11) 97867-8459
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="p-4 md:p-8 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm"
-                >
-                  <h2 class="text-lg md:text-2xl font-bold mb-4 md:mb-6">
-                    Informações
-                  </h2>
-                  <div class="space-y-3 md:space-y-6">
-                    <div>
-                      <div
-                        class="font-semibold text-gray-400 mb-1 md:mb-2 text-sm md:text-base"
-                      >
-                        Localização
-                      </div>
-                      <div class="text-base md:text-lg">São Paulo, Brasil</div>
-                    </div>
-                    <div>
-                      <div
-                        class="font-semibold text-gray-400 mb-1 md:mb-2 text-sm md:text-base"
-                      >
-                        Status
-                      </div>
-                      <div class="flex items-center">
-                        <div
-                          class="w-2 h-2 md:w-3 md:h-3 bg-green-500 rounded-full mr-2 animate-pulse"
-                        ></div>
-                        <span class="text-base md:text-lg">Disponível</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- About Me Window - Responsive -->
-            <div v-else-if="window.appId === 'about'">
-              <h1 class="text-xl md:text-3xl font-bold mb-2">Minha Jornada</h1>
-              <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
-                De onde vim e onde quero chegar
-              </p>
-
-              <div
-                class="bg-gradient-to-br from-gray-700/20 to-gray-800/20 p-4 md:p-8 rounded-2xl backdrop-blur-sm mb-6 md:mb-8"
-              >
-                <div class="flex items-center mb-4 md:mb-6">
-                  <div
-                    class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-600/80 to-rose-600/80 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                  >
-                    <i class="fas fa-heart text-xl md:text-2xl text-white"></i>
-                  </div>
-                  <div>
-                    <h2 class="text-lg md:text-2xl font-bold">
-                      Histórias que me construíram
-                    </h2>
-                    <p class="text-gray-400 text-sm md:text-base">
-                      Cada experiência moldou quem sou hoje
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  class="space-y-3 md:space-y-6 text-sm md:text-lg leading-relaxed"
-                >
-                  <p class="text-gray-300">
-                    Nasci na Bahia, terra de axé e acarajé. Aos 16 anos, com uma
-                    mochila cheia de sonhos e um coração cheio de coragem, tomei
-                    uma decisão que mudaria minha vida para sempre.
-                  </p>
-
-                  <p class="text-gray-300">
-                    Fui criado por meus avós, pessoas simples com sabedoria
-                    profunda. Minha avó, com sua fé inabalável, me ensinou que
-                    "Deus escreve certo por linhas tortas". Meu avô, com suas
-                    mãos calejadas pelo trabalho, me mostrou que dignidade não
-                    se mede pelo cargo, mas pelo caráter.
-                  </p>
-
-                  <p class="text-gray-300">
-                    No Magazine Luiza, aprendi mais do que logística e vendas.
-                    Aprendi a olhar nos olhos do cliente, a ouvir histórias, a
-                    resolver problemas reais. Cada caixa que empacotei, cada
-                    planilha que organizei, foi um degrau na escada do meu
-                    crescimento.
-                  </p>
-
-                  <p class="text-gray-300">
-                    E então veio a virada: enquanto organizava estoques, comecei
-                    a organizar linhas de código. Enquanto resolvia problemas de
-                    logística, comecei a resolver bugs. A faculdade de ADS não
-                    foi apenas uma mudança de carreira - foi a materialização de
-                    um sonho que sempre viveu em mim.
-                  </p>
-
-                  <div
-                    class="p-4 md:p-6 bg-gradient-to-r from-amber-600/15 to-rose-600/15 rounded-xl mt-4 md:mt-6 border-l-4 border-amber-500/50"
-                  >
-                    <p
-                      class="text-center italic text-base md:text-xl text-amber-200"
-                    >
-                      "Levo comigo o sotaque da Bahia, a resiliência do varejo e
-                      a paixão pelo código. Cada 'Hello World' que escrevo é um
-                      'Olá, mundo novo' que conquisto."
-                    </p>
-                  </div>
-
-                  <p class="text-gray-300 pt-2">
-                    Hoje, com 23 anos, olho para trás e vejo não apenas uma
-                    trajetória profissional, mas uma história de transformação.
-                    Da prateleira do estoque para a stack de desenvolvimento,
-                    cada experiência me tornou não apenas um melhor
-                    desenvolvedor, mas uma pessoa mais completa.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <!-- Certifications Window - Responsive -->
-            <div v-else-if="window.appId === 'certifications'">
-              <h1 class="text-xl md:text-3xl font-bold mb-2">Certificações</h1>
-              <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
-                Qualificações e aprendizados
-              </p>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-                <div
-                  v-for="cert in certifications"
-                  :key="cert.id"
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                      :class="cert.bgColor"
-                    >
-                      <i
-                        class="fas fa-certificate text-lg md:text-xl"
-                        :class="cert.iconColor"
-                      ></i>
-                    </div>
-                    <div>
-                      <h3 class="text-base md:text-xl font-bold">
-                        {{ cert.title }}
-                      </h3>
-                      <p class="text-gray-400 text-sm md:text-base">
-                        {{ cert.platform }}
-                      </p>
-                    </div>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    {{ cert.description }}
-                  </p>
-                  <div class="text-xs md:text-sm" :class="cert.dateColor">
-                    {{ cert.date }}
-                  </div>
-                  <div v-if="cert.code" class="mt-2">
-                    <span class="text-xs text-gray-400">
-                      <i class="fas fa-hashtag mr-1"></i>Código: {{ cert.code }}
-                    </span>
-                  </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: skill.level + '%' }"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Contact Window - Responsive -->
+      <div v-else-if="win.appId === 'contact'">
+        <h1 class="text-xl md:text-3xl font-bold mb-2">
+          Entre em Contato
+        </h1>
+        <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
+          Vamos conversar sobre oportunidades
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+          <div class="space-y-4 md:space-y-6">
+            <div class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm">
+              <div class="flex items-center mb-3 md:mb-4">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-cyan-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4">
+                  <i class="fas fa-envelope text-xl md:text-2xl text-cyan-500"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-base md:text-lg">E-mail</div>
+                  <a href="mailto:mateus.oliveira.retiba@gmail.com" class="text-gray-300 hover:text-cyan-400 transition-colors text-sm md:text-base">
+                    mateus.oliveira.retiba@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm">
+              <div class="flex items-center mb-3 md:mb-4">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-green-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4">
+                  <i class="fab fa-whatsapp text-xl md:text-2xl text-green-500"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-base md:text-lg">WhatsApp</div>
+                  <a href="https://wa.me/5511978678459" target="_blank" class="text-gray-300 hover:text-green-400 transition-colors text-sm md:text-base">
+                    (11) 97867-8459
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 md:p-8 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm">
+            <h2 class="text-lg md:text-2xl font-bold mb-4 md:mb-6">
+              Informações
+            </h2>
+            <div class="space-y-3 md:space-y-6">
+              <div>
+                <div class="font-semibold text-gray-400 mb-1 md:mb-2 text-sm md:text-base">Localização</div>
+                <div class="text-base md:text-lg">São Paulo, Brasil</div>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-400 mb-1 md:mb-2 text-sm md:text-base">Status</div>
+                <div class="flex items-center">
+                  <div class="w-2 h-2 md:w-3 md:h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                  <span class="text-base md:text-lg">Disponível</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Me Window - Responsive -->
+      <div v-else-if="win.appId === 'about'">
+        <h1 class="text-xl md:text-3xl font-bold mb-2">Minha Jornada</h1>
+        <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
+          De onde vim e onde quero chegar
+        </p>
+
+        <div class="bg-gradient-to-br from-gray-700/20 to-gray-800/20 p-4 md:p-8 rounded-2xl backdrop-blur-sm mb-6 md:mb-8">
+          <div class="flex items-center mb-4 md:mb-6">
+            <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-600/80 to-rose-600/80 rounded-xl flex items-center justify-center mr-3 md:mr-4">
+              <i class="fas fa-heart text-xl md:text-2xl text-white"></i>
+            </div>
+            <div>
+              <h2 class="text-lg md:text-2xl font-bold">
+                Histórias que me construíram
+              </h2>
+              <p class="text-gray-400 text-sm md:text-base">
+                Cada experiência moldou quem sou hoje
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-3 md:space-y-6 text-sm md:text-lg leading-relaxed">
+            <p class="text-gray-300">
+              Nasci na Bahia, terra de axé e acarajé. Aos 16 anos, com uma
+              mochila cheia de sonhos e um coração cheio de coragem, tomei
+              uma decisão que mudaria minha vida para sempre.
+            </p>
+
+            <p class="text-gray-300">
+              Fui criado por meus avós, pessoas simples com sabedoria
+              profunda. Minha avó, com sua fé inabalável, me ensinou que
+              "Deus escreve certo por linhas tortas". Meu avô, com suas
+              mãos calejadas pelo trabalho, me mostrou que dignidade não
+              se mede pelo cargo, mas pelo caráter.
+            </p>
+
+            <p class="text-gray-300">
+              No Magazine Luiza, aprendi mais do que logística e vendas.
+              Aprendi a olhar nos olhos do cliente, a ouvir histórias, a
+              resolver problemas reais. Cada caixa que empacotei, cada
+              planilha que organizei, foi um degrau na escada do meu
+              crescimento.
+            </p>
+
+            <p class="text-gray-300">
+              E então veio a virada: enquanto organizava estoques, comecei
+              a organizar linhas de código. Enquanto resolvia problemas de
+              logística, comecei a resolver bugs. A faculdade de ADS não
+              foi apenas uma mudança de carreira - foi a materialização de
+              um sonho que sempre viveu em mim.
+            </p>
+
+            <div class="p-4 md:p-6 bg-gradient-to-r from-amber-600/15 to-rose-600/15 rounded-xl mt-4 md:mt-6 border-l-4 border-amber-500/50">
+              <p class="text-center italic text-base md:text-xl text-amber-200">
+                "Levo comigo o sotaque da Bahia, a resiliência do varejo e
+                a paixão pelo código. Cada 'Hello World' que escrevo é um
+                'Olá, mundo novo' que conquisto."
+              </p>
+            </div>
+
+            <p class="text-gray-300 pt-2">
+              Hoje, com 23 anos, olho para trás e vejo não apenas uma
+              trajetória profissional, mas uma história de transformação.
+              Da prateleira do estoque para a stack de desenvolvimento,
+              cada experiência me tornou não apenas um melhor
+              desenvolvedor, mas uma pessoa mais completa.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications Window - Responsive -->
+      <div v-else-if="win.appId === 'certifications'">
+        <h1 class="text-xl md:text-3xl font-bold mb-2">Certificações</h1>
+        <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
+          Qualificações e aprendizados
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+          <div v-for="cert in certifications" :key="cert.id" class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm">
+            <div class="flex items-start mb-3 md:mb-4">
+              <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mr-3 md:mr-4" :class="cert.bgColor">
+                <i class="fas fa-certificate text-lg md:text-xl" :class="cert.iconColor"></i>
+              </div>
+              <div>
+                <h3 class="text-base md:text-xl font-bold">{{ cert.title }}</h3>
+                <p class="text-gray-400 text-sm md:text-base">{{ cert.platform }}</p>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">{{ cert.description }}</p>
+            <div class="text-xs md:text-sm" :class="cert.dateColor">{{ cert.date }}</div>
+            <div v-if="cert.code" class="mt-2">
+              <span class="text-xs text-gray-400">
+                <i class="fas fa-hashtag mr-1"></i>Código: {{ cert.code }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     </main>
 
     <!-- Taskbar -->
@@ -1572,438 +845,6 @@
         </button>
       </div>
     </div>
-    <script>
-      const { createApp } = Vue;
-
-      createApp({
-        data() {
-          return {
-            isDarkMode: true,
-            currentTime: "00:00",
-            currentDate: "01/01/2025",
-            windows: [],
-            nextWindowId: 1,
-            clockInterval: null,
-            contextMenu: {
-              visible: false,
-              x: 0,
-              y: 0,
-            },
-            certifications: [
-              {
-                id: 1,
-                title: "Laravel",
-                platform: "Udemy",
-                description:
-                  "Desenvolvimento com Laravel, Blade, POO e Frameworks PHP",
-                date: "Emitido em jun 2024",
-                bgColor: "bg-purple-600/20",
-                iconColor: "text-purple-500",
-                dateColor: "text-cyan-400",
-              },
-              {
-                id: 2,
-                title: "API REST com PHP",
-                platform: "Udemy",
-                description:
-                  "Criação de APIs RESTful com Programação Orientada a Objetos e Arquitetura MVC",
-                date: "Emitido em abr 2024",
-                bgColor: "bg-blue-600/20",
-                iconColor: "text-blue-500",
-                dateColor: "text-cyan-400",
-              },
-              {
-                id: 3,
-                title: "HTML5",
-                platform: "Alura",
-                description:
-                  "Fundamentos de HTML5, CSS3 e JavaScript para desenvolvimento web",
-                date: "Emitido em nov 2023",
-                bgColor: "bg-orange-600/20",
-                iconColor: "text-orange-500",
-                dateColor: "text-cyan-400",
-              },
-              {
-                id: 4,
-                title: "Git Flow",
-                platform: "Alura",
-                description:
-                  "Metodologia Git Flow para versionamento e controle de fluxo de trabalho",
-                date: "Emitido em nov 2023",
-                bgColor: "bg-red-600/20",
-                iconColor: "text-red-500",
-                dateColor: "text-cyan-400",
-              },
-              {
-                id: 5,
-                title: "PHP do Básico ao Avançado",
-                platform: "Alura",
-                description:
-                  "Programação PHP avançada com Regex, MySQL e boas práticas de desenvolvimento",
-                date: "Emitido em nov 2023",
-                bgColor: "bg-purple-600/20",
-                iconColor: "text-purple-500",
-                dateColor: "text-cyan-400",
-              },
-              {
-                id: 6,
-                title: "HTML5 e CSS3 - Módulo 1",
-                platform: "Curso em Vídeo",
-                description:
-                  "Fundamentos de HTML5 e CSS3 com 40 horas de conteúdo prático",
-                date: "Emitido em out 2023",
-                bgColor: "bg-green-600/20",
-                iconColor: "text-green-500",
-                dateColor: "text-cyan-400",
-                code: "CDC2F-C9E9-4",
-              },
-              {
-                id: 7,
-                title: "HTML5 e CSS3 - Módulo 2",
-                platform: "Curso em Vídeo",
-                description:
-                  "HTML5 e CSS3 avançado com mais 40 horas de conteúdo prático",
-                date: "Emitido em out 2023",
-                bgColor: "bg-green-600/20",
-                iconColor: "text-green-500",
-                dateColor: "text-cyan-400",
-                code: "CDC2F-E776-6",
-              },
-              {
-                id: 8,
-                title: "Curso PHP",
-                platform: "Curso em Vídeo",
-                description:
-                  "Fundamentos de programação PHP para desenvolvimento web back-end",
-                date: "Emitido em 2023",
-                bgColor: "bg-purple-600/20",
-                iconColor: "text-purple-500",
-                dateColor: "text-cyan-400",
-              },
-              {
-                id: 9,
-                title: "Novas Certificações",
-                platform: "Em Andamento",
-                description:
-                  "Continuo me especializando com novos cursos e certificações",
-                date: "Em progresso",
-                bgColor: "bg-yellow-600/20",
-                iconColor: "text-yellow-500",
-                dateColor: "text-yellow-400",
-              },
-            ],
-            mobileMenuOpen: false,
-            isMobile: false,
-            touchStartTime: 0,
-            devSkills: [
-              { name: "PHP", level: 90 },
-              { name: "Laravel", level: 85 },
-              { name: "JavaScript", level: 80 },
-              { name: "Vue.js", level: 75 },
-              { name: "HTML5/CSS3", level: 88 },
-              { name: "APIs RESTful", level: 82 },
-            ],
-            otherSkills: [
-              { name: "MySQL", level: 85 },
-              { name: "Oracle", level: 80 },
-              { name: "Docker", level: 70 },
-              { name: "Git/GitLab", level: 80 },
-              { name: "Filament", level: 75 },
-              { name: "Scrum/Kanban", level: 78 },
-            ],
-            apps: {
-              linkedin: {
-                title: "LinkedIn",
-                icon: "fab fa-linkedin",
-                bgColor: "bg-gradient-to-br from-blue-600 to-blue-800",
-              },
-              // portfolio: {
-              //   title: "Portfólio",
-              //   icon: "fas fa-folder",
-              //   bgColor: "bg-gradient-to-br from-cyan-500 to-cyan-700",
-              // },
-              experience: {
-                title: "Experiência",
-                icon: "fas fa-briefcase",
-                bgColor: "bg-gradient-to-br from-green-500 to-green-700",
-              },
-              skills: {
-                title: "Habilidades",
-                icon: "fas fa-code",
-                bgColor: "bg-gradient-to-br from-purple-500 to-purple-700",
-              },
-              contact: {
-                title: "Contato",
-                icon: "fas fa-envelope",
-                bgColor: "bg-gradient-to-br from-yellow-500 to-yellow-700",
-              },
-              about: {
-                title: "Minha História",
-                icon: "fas fa-heart",
-                bgColor: "bg-gradient-to-br from-pink-500 to-pink-700",
-              },
-              certifications: {
-                title: "Certificados",
-                icon: "fas fa-certificate",
-                bgColor: "bg-gradient-to-br from-red-500 to-red-700",
-              },
-            },
-          };
-        },
-        mounted() {
-          this.updateClock();
-          this.clockInterval = setInterval(this.updateClock, 1000);
-
-          // Só abre o LinkedIn automaticamente se não for mobile
-          if (window.innerWidth > 768) {
-            this.openApp("linkedin");
-          }
-
-          this.checkMobile();
-          window.addEventListener("resize", this.checkMobile);
-          this.loadTheme();
-        },
-        beforeUnmount() {
-          if (this.clockInterval) clearInterval(this.clockInterval);
-          window.removeEventListener("resize", this.checkMobile);
-        },
-        methods: {
-          updateClock() {
-            const now = new Date();
-            this.currentTime = now.toLocaleTimeString("pt-BR", {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-            this.currentDate = now.toLocaleDateString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            });
-          },
-          openApp(appId) {
-            console.log("Abrindo app:", appId); // Debug
-
-            const app = this.apps[appId];
-            if (!app) return;
-
-            const existing = this.windows.find((w) => w.appId === appId);
-            if (existing) {
-              this.focusWindow(existing.id);
-              existing.minimized = false;
-              this.mobileMenuOpen = false;
-              return;
-            }
-
-            const window = {
-              id: this.nextWindowId++,
-              appId: appId,
-              title: app.title,
-              icon: app.icon,
-              iconBgColor: app.bgColor,
-              x: this.isMobile ? 10 : 100 + this.windows.length * 30,
-              y: this.isMobile ? 10 : 100 + this.windows.length * 30,
-              width: 1000,
-              height: 700,
-              zIndex: 99999 + this.windows.length,
-              minimized: false,
-              maximized: false,
-            };
-
-            this.windows.push(window);
-            this.windows.forEach((w, index) => {
-              w.zIndex = 100 + index;
-            });
-            this.windows.sort((a, b) => a.zIndex - b.zIndex);
-
-            this.closeContextMenu();
-            this.mobileMenuOpen = false;
-          },
-          focusWindow(windowId) {
-            const window = this.windows.find((w) => w.id === windowId);
-            if (!window) return;
-
-            window.minimized = false;
-            const maxZ = Math.max(...this.windows.map((w) => w.zIndex));
-            window.zIndex = maxZ + 1;
-            this.windows.sort((a, b) => a.zIndex - b.zIndex);
-          },
-          minimizeWindow(windowId) {
-            const window = this.windows.find((w) => w.id === windowId);
-            if (window) window.minimized = !window.minimized;
-          },
-          maximizeWindow(windowId) {
-            const window = this.windows.find((w) => w.id === windowId);
-            if (window) {
-              window.maximized = !window.maximized;
-              if (window.maximized) {
-                window.x = 0;
-                window.y = 0;
-                window.width = window.innerWidth;
-                window.height = window.innerHeight - (this.isMobile ? 120 : 80);
-              } else {
-                window.width = this.isMobile ? window.innerWidth - 20 : 1000;
-                window.height = this.isMobile ? window.innerHeight - 150 : 700;
-              }
-            }
-          },
-          closeWindow(windowId) {
-            console.log("Fechando janela:", windowId);
-            this.windows = this.windows.filter((w) => w.id !== windowId);
-          },
-          toggleWindow(windowId) {
-            const window = this.windows.find((w) => w.id === windowId);
-            if (window) {
-              window.minimized = !window.minimized;
-              if (!window.minimized) this.focusWindow(windowId);
-            }
-          },
-          startDrag(window, event) {
-            if (this.isMobile) return;
-
-            event.preventDefault();
-            const startX = event.clientX;
-            const startY = event.clientY;
-            const startLeft = window.x;
-            const startTop = window.y;
-
-            this.focusWindow(window.id);
-
-            const onMove = (e) => {
-              const dx = e.clientX - startX;
-              const dy = e.clientY - startY;
-              window.x = startLeft + dx;
-              window.y = startTop + dy;
-            };
-
-            const onUp = () => {
-              document.removeEventListener("mousemove", onMove);
-              document.removeEventListener("mouseup", onUp);
-            };
-
-            document.addEventListener("mousemove", onMove);
-            document.addEventListener("mouseup", onUp);
-          },
-          startTouchDrag(window, event) {
-            if (!this.isMobile) return;
-
-            event.preventDefault();
-            const touch = event.touches[0];
-            const startX = touch.clientX;
-            const startY = touch.clientY;
-            const startLeft = window.x;
-            const startTop = window.y;
-
-            this.focusWindow(window.id);
-
-            const onMove = (e) => {
-              e.preventDefault();
-              const touch = e.touches[0];
-              const dx = touch.clientX - startX;
-              const dy = touch.clientY - startY;
-              window.x = startLeft + dx;
-              window.y = startTop + dy;
-            };
-
-            const onEnd = () => {
-              document.removeEventListener("touchmove", onMove);
-              document.removeEventListener("touchend", onEnd);
-            };
-
-            document.addEventListener("touchmove", onMove, { passive: false });
-            document.addEventListener("touchend", onEnd);
-          },
-          toggleTheme() {
-            this.isDarkMode = !this.isDarkMode;
-            document.documentElement.classList.toggle("dark", this.isDarkMode);
-            document.documentElement.classList.toggle(
-              "light",
-              !this.isDarkMode
-            );
-
-            // Salvar preferência no localStorage
-            localStorage.setItem(
-              "portfolio-theme",
-              this.isDarkMode ? "dark" : "light"
-            );
-          },
-          loadTheme() {
-            const savedTheme = localStorage.getItem("portfolio-theme");
-            if (savedTheme) {
-              this.isDarkMode = savedTheme === "dark";
-              document.documentElement.classList.toggle(
-                "dark",
-                this.isDarkMode
-              );
-              document.documentElement.classList.toggle(
-                "light",
-                !this.isDarkMode
-              );
-            }
-          },
-          showContextMenu(event) {
-            if (this.isMobile) return;
-
-            this.contextMenu = {
-              visible: true,
-              x: event.clientX,
-              y: event.clientY,
-            };
-          },
-          closeContextMenu() {
-            this.contextMenu.visible = false;
-          },
-          refreshDesktop() {
-            this.closeContextMenu();
-            const activeWindow = this.windows.find((w) => !w.minimized);
-            if (activeWindow) {
-              this.focusWindow(activeWindow.id);
-            }
-          },
-          openAllApps() {
-            Object.keys(this.apps).forEach((appId) => {
-              if (!this.windows.find((w) => w.appId === appId)) {
-                this.openApp(appId);
-              }
-            });
-            this.closeContextMenu();
-            this.mobileMenuOpen = false;
-          },
-          checkMobile() {
-            this.isMobile = window.innerWidth <= 768;
-
-            // Ajustar janelas para mobile
-            if (this.isMobile) {
-              this.windows.forEach((window) => {
-                if (!window.maximized) {
-                  window.width = window.innerWidth - 20;
-                  window.height = window.innerHeight - 150;
-                }
-              });
-            }
-          },
-          toggleMobileMenu() {
-            this.mobileMenuOpen = !this.mobileMenuOpen;
-          },
-          handleIconClick(appId) {
-            console.log("Ícone clicado:", appId); // Debug
-            // Em mobile, clicar abre imediatamente
-            // Em desktop, só abrir no duplo clique
-            if (this.isMobile) {
-              this.openApp(appId);
-            }
-            // Para desktop, o clique simples não faz nada - só o duplo clique
-          },
-          handleTouchStart() {
-            this.touchStartTime = Date.now();
-          },
-          handleTouchEnd(appId) {
-            // Para mobile, usar apenas toque simples
-            if (this.isMobile) {
-              this.openApp(appId);
-            }
-          },
-        },
-      }).mount("#app");
-    </script>
+  <script src="assets/index.js"></script>
   </body>
 </html>
