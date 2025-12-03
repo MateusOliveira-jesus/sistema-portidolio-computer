@@ -1382,650 +1382,44 @@
             <div v-else-if="window.appId === 'certifications'">
               <h1 class="text-xl md:text-3xl font-bold mb-2">Certificações</h1>
               <p class="text-gray-400 mb-4 md:mb-8 text-sm md:text-base">
-                Qualificações e aprendizados - Total de 9 certificados
+                Qualificações e aprendizados
               </p>
 
-              <!-- Filtros -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                <button
-                  @click="certFilter = 'all'"
-                  :class="[
-        'px-3 py-1 rounded-full text-sm transition-all clickable',
-        certFilter === 'all' 
-          ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white' 
-          : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50'
-      ]"
-                >
-                  Todos
-                </button>
-                <button
-                  @click="certFilter = 'udemy'"
-                  :class="[
-        'px-3 py-1 rounded-full text-sm transition-all clickable',
-        certFilter === 'udemy' 
-          ? 'bg-purple-600 text-white' 
-          : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50'
-      ]"
-                >
-                  Udemy
-                </button>
-                <button
-                  @click="certFilter = 'alura'"
-                  :class="[
-        'px-3 py-1 rounded-full text-sm transition-all clickable',
-        certFilter === 'alura' 
-          ? 'bg-blue-600 text-white' 
-          : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50'
-      ]"
-                >
-                  Alura
-                </button>
-                <button
-                  @click="certFilter = 'curso-em-video'"
-                  :class="[
-        'px-3 py-1 rounded-full text-sm transition-all clickable',
-        certFilter === 'curso-em-video' 
-          ? 'bg-green-600 text-white' 
-          : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50'
-      ]"
-                >
-                  Curso em Vídeo
-                </button>
-              </div>
-
-              <!-- Grid de Certificados -->
-              <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-              >
-                <!-- Laravel (Udemy) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-purple-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'udemy'"
+                  v-for="cert in certifications"
+                  :key="cert.id"
+                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm"
                 >
                   <div class="flex items-start mb-3 md:mb-4">
                     <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-purple-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/5968/5968478.png"
-                        alt="Udemy"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">Laravel</h3>
-                      <p class="text-gray-400 text-sm md:text-base">Udemy</p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-purple-600/30 text-purple-300 rounded-full"
-                    >
-                      Framework PHP
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Desenvolvimento com Laravel, Blade, POO e Frameworks PHP
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em jun 2024
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira jul 2024
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Blade</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >POO</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Frameworks PHP</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Laravel</span
-                    >
-                  </div>
-                </div>
-
-                <!-- API REST com PHP (Udemy) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-purple-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'udemy'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-purple-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/5968/5968478.png"
-                        alt="Udemy"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">
-                        API REST com PHP
-                      </h3>
-                      <p class="text-gray-400 text-sm md:text-base">Udemy</p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-blue-600/30 text-blue-300 rounded-full"
-                    >
-                      Back-end
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Criação de APIs RESTful com Programação Orientada a Objetos
-                    e Arquitetura MVC
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em abr 2024
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira mai 2024
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >POO</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >MVC</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >API REST</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >PHP</span
-                    >
-                  </div>
-                </div>
-
-                <!-- HTML 5 (Alura) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-blue-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'alura'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-blue-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://www.alura.com.br/assets/img/home/alura-logo.1647533643.svg"
-                        alt="Alura"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">HTML5</h3>
-                      <p class="text-gray-400 text-sm md:text-base">Alura</p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-orange-600/30 text-orange-300 rounded-full"
-                    >
-                      Front-end
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Fundamentos de HTML5, CSS3 e JavaScript para desenvolvimento
-                    web
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em nov 2023
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira fev 2024
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >CSS3</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >JavaScript</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >HTML5</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Web</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Git flow (Alura) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-blue-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'alura'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-blue-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://www.alura.com.br/assets/img/home/alura-logo.1647533643.svg"
-                        alt="Alura"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">Git Flow</h3>
-                      <p class="text-gray-400 text-sm md:text-base">Alura</p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-red-600/30 text-red-300 rounded-full"
-                    >
-                      DevOps
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Metodologia Git Flow para versionamento e controle de fluxo
-                    de trabalho
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em nov 2023
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira jan 2024
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >GitFlow</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Git</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Versionamento</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >CI/CD</span
-                    >
-                  </div>
-                </div>
-
-                <!-- PHP do básico ao avançado (Alura) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-blue-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'alura'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-blue-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://www.alura.com.br/assets/img/home/alura-logo.1647533643.svg"
-                        alt="Alura"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">
-                        PHP do Básico ao Avançado
-                      </h3>
-                      <p class="text-gray-400 text-sm md:text-base">Alura</p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-purple-600/30 text-purple-300 rounded-full"
-                    >
-                      Back-end
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Programação PHP avançada com Regex, MySQL e boas práticas de
-                    desenvolvimento
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em nov 2023
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira jan 2024
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Regex</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >PHP</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >MySQL</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Bancos de Dados</span
-                    >
-                  </div>
-                </div>
-
-                <!-- CURSO HTML5 E CSS3 (Curso em Vídeo) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-green-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'curso-em-video'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-green-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://www.cursoemvideo.com/wp-content/uploads/2019/08/favicon.png"
-                        alt="Curso em Vídeo"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">
-                        HTML5 e CSS3 - Módulo 1
-                      </h3>
-                      <p class="text-gray-400 text-sm md:text-base">
-                        Curso em Vídeo
-                      </p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-orange-600/30 text-orange-300 rounded-full"
-                    >
-                      Front-end
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Fundamentos de HTML5 e CSS3 com 40 horas de conteúdo prático
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em out 2023
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira out 2023
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >CSS3</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >HTML5</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Web Design</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Responsivo</span
-                    >
-                  </div>
-                  <div class="mt-3 pt-3 border-t border-gray-600/50">
-                    <p class="text-xs text-gray-400">
-                      <i class="fas fa-hashtag mr-1"></i>Código: CDC2F-C9E9-4
-                    </p>
-                    <button
-                      class="mt-2 text-xs text-cyan-400 hover:text-cyan-300 flex items-center clickable"
-                      @click="openPDF('certificado-curso-em-video.pdf')"
-                    >
-                      <i class="far fa-file-pdf mr-1"></i>Ver credencial
-                    </button>
-                  </div>
-                </div>
-
-                <!-- CURSO HTML5 E CSS3: MÓDULO 2 (Curso em Vídeo) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-green-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'curso-em-video'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-green-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://www.cursoemvideo.com/wp-content/uploads/2019/08/favicon.png"
-                        alt="Curso em Vídeo"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">
-                        HTML5 e CSS3 - Módulo 2
-                      </h3>
-                      <p class="text-gray-400 text-sm md:text-base">
-                        Curso em Vídeo
-                      </p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-orange-600/30 text-orange-300 rounded-full"
-                    >
-                      Front-end
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    HTML5 e CSS3 avançado com mais 40 horas de conteúdo prático
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em out 2023
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-clock mr-1"></i>Expira out 2023
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >CSS3 Avançado</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >HTML5 Avançado</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Layouts</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Animação CSS</span
-                    >
-                  </div>
-                  <div class="mt-3 pt-3 border-t border-gray-600/50">
-                    <p class="text-xs text-gray-400">
-                      <i class="fas fa-hashtag mr-1"></i>Código: CDC2F-E776-6
-                    </p>
-                    <button
-                      class="mt-2 text-xs text-cyan-400 hover:text-cyan-300 flex items-center clickable"
-                      @click="openPDF('Mateus-oliveira-de-jesus-Curso-HTML5-e-CSS3-modulo-2-de-5-40-HORAS-Certificado-Curso-em-Video.pdf')"
-                    >
-                      <i class="far fa-file-pdf mr-1"></i>Ver certificado PDF
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Curso PHP (Curso em Vídeo) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-green-500/20"
-                  v-if="certFilter === 'all' || certFilter === 'curso-em-video'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-green-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
-                    >
-                      <img
-                        src="https://www.cursoemvideo.com/wp-content/uploads/2019/08/favicon.png"
-                        alt="Curso em Vídeo"
-                        class="w-6 h-6 md:w-8 md:h-8"
-                      />
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="text-base md:text-xl font-bold">Curso PHP</h3>
-                      <p class="text-gray-400 text-sm md:text-base">
-                        Curso em Vídeo
-                      </p>
-                    </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-purple-600/30 text-purple-300 rounded-full"
-                    >
-                      Back-end
-                    </span>
-                  </div>
-                  <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Fundamentos de programação PHP para desenvolvimento web
-                    back-end
-                  </p>
-                  <div class="flex justify-between items-center">
-                    <div class="text-xs md:text-sm text-cyan-400">
-                      Emitido em 2023
-                    </div>
-                    <div class="text-xs text-gray-400">
-                      <i class="fas fa-check-circle text-green-500 mr-1"></i
-                      >Completo
-                    </div>
-                  </div>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >PHP</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Back-end</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Web Development</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Server-side</span
-                    >
-                  </div>
-                  <div class="mt-3 pt-3 border-t border-gray-600/50">
-                    <button
-                      class="text-xs text-cyan-400 hover:text-cyan-300 flex items-center clickable"
-                      @click="viewCertificateImage('1000337112.png')"
-                    >
-                      <i class="far fa-image mr-1"></i>Ver imagem do certificado
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Certificado Adicional (Placeholder para futuros) -->
-                <div
-                  class="p-4 md:p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-2xl backdrop-blur-sm border border-yellow-500/20"
-                  v-if="certFilter === 'all'"
-                >
-                  <div class="flex items-start mb-3 md:mb-4">
-                    <div
-                      class="w-10 h-10 md:w-12 md:h-12 bg-yellow-600/20 rounded-xl flex items-center justify-center mr-3 md:mr-4"
+                      class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mr-3 md:mr-4"
+                      :class="cert.bgColor"
                     >
                       <i
-                        class="fas fa-plus text-lg md:text-xl text-yellow-500"
+                        class="fas fa-certificate text-lg md:text-xl"
+                        :class="cert.iconColor"
                       ></i>
                     </div>
-                    <div class="flex-1">
+                    <div>
                       <h3 class="text-base md:text-xl font-bold">
-                        Em Progresso
+                        {{ cert.title }}
                       </h3>
                       <p class="text-gray-400 text-sm md:text-base">
-                        Novas Certificações
+                        {{ cert.platform }}
                       </p>
                     </div>
-                    <span
-                      class="text-xs px-2 py-1 bg-yellow-600/30 text-yellow-300 rounded-full"
-                    >
-                      Em Andamento
-                    </span>
                   </div>
                   <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">
-                    Continuo me especializando com novos cursos e certificações
+                    {{ cert.description }}
                   </p>
-                  <div class="mt-3 flex flex-wrap gap-1">
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Vue.js</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Docker</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Oracle</span
-                    >
-                    <span class="text-xs px-2 py-1 bg-gray-600/50 rounded-full"
-                      >Filament</span
-                    >
+                  <div class="text-xs md:text-sm" :class="cert.dateColor">
+                    {{ cert.date }}
                   </div>
-                </div>
-              </div>
-
-              <!-- Estatísticas -->
-              <div
-                class="mt-8 md:mt-12 p-4 md:p-6 bg-gradient-to-br from-gray-700/20 to-gray-800/20 rounded-2xl backdrop-blur-sm"
-              >
-                <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center">
-                  <i class="fas fa-chart-bar mr-3 text-cyan-500"></i>
-                  Estatísticas dos Certificados
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-cyan-500">
-                      9
-                    </div>
-                    <div class="text-sm text-gray-400">Total</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-purple-500">
-                      2
-                    </div>
-                    <div class="text-sm text-gray-400">Udemy</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-blue-500">
-                      3
-                    </div>
-                    <div class="text-sm text-gray-400">Alura</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-green-500">
-                      3
-                    </div>
-                    <div class="text-sm text-gray-400">Curso em Vídeo</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Modal para Visualização -->
-              <div
-                v-if="showCertModal"
-                class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[100000] p-4"
-                @click="showCertModal = false"
-              >
-                <div
-                  class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-cyan-700/50 p-4 md:p-6 max-w-4xl w-full max-h-[90vh] overflow-auto"
-                  @click.stop
-                >
-                  <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold">{{ selectedCert.title }}</h3>
-                    <button
-                      @click="showCertModal = false"
-                      class="p-2 hover:bg-gray-700/50 rounded-xl clickable"
-                    >
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                  <div v-if="selectedCert.type === 'pdf'">
-                    <iframe
-                      :src="selectedCert.url"
-                      class="w-full h-[70vh] rounded-xl"
-                      frameborder="0"
-                    ></iframe>
-                  </div>
-                  <div v-else-if="selectedCert.type === 'image'">
-                    <img
-                      :src="selectedCert.url"
-                      class="w-full h-auto rounded-xl"
-                      alt="Certificado"
-                    />
-                  </div>
-                  <div class="mt-4 text-right">
-                    <button
-                      @click="downloadCertificate(selectedCert)"
-                      class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl hover:from-cyan-600 hover:to-blue-700 clickable"
-                    >
-                      <i class="fas fa-download mr-2"></i>Download
-                    </button>
+                  <div v-if="cert.code" class="mt-2">
+                    <span class="text-xs text-gray-400">
+                      <i class="fas fa-hashtag mr-1"></i>Código: {{ cert.code }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -2195,6 +1589,109 @@
               x: 0,
               y: 0,
             },
+            certifications: [
+              {
+                id: 1,
+                title: "Laravel",
+                platform: "Udemy",
+                description:
+                  "Desenvolvimento com Laravel, Blade, POO e Frameworks PHP",
+                date: "Emitido em jun 2024",
+                bgColor: "bg-purple-600/20",
+                iconColor: "text-purple-500",
+                dateColor: "text-cyan-400",
+              },
+              {
+                id: 2,
+                title: "API REST com PHP",
+                platform: "Udemy",
+                description:
+                  "Criação de APIs RESTful com Programação Orientada a Objetos e Arquitetura MVC",
+                date: "Emitido em abr 2024",
+                bgColor: "bg-blue-600/20",
+                iconColor: "text-blue-500",
+                dateColor: "text-cyan-400",
+              },
+              {
+                id: 3,
+                title: "HTML5",
+                platform: "Alura",
+                description:
+                  "Fundamentos de HTML5, CSS3 e JavaScript para desenvolvimento web",
+                date: "Emitido em nov 2023",
+                bgColor: "bg-orange-600/20",
+                iconColor: "text-orange-500",
+                dateColor: "text-cyan-400",
+              },
+              {
+                id: 4,
+                title: "Git Flow",
+                platform: "Alura",
+                description:
+                  "Metodologia Git Flow para versionamento e controle de fluxo de trabalho",
+                date: "Emitido em nov 2023",
+                bgColor: "bg-red-600/20",
+                iconColor: "text-red-500",
+                dateColor: "text-cyan-400",
+              },
+              {
+                id: 5,
+                title: "PHP do Básico ao Avançado",
+                platform: "Alura",
+                description:
+                  "Programação PHP avançada com Regex, MySQL e boas práticas de desenvolvimento",
+                date: "Emitido em nov 2023",
+                bgColor: "bg-purple-600/20",
+                iconColor: "text-purple-500",
+                dateColor: "text-cyan-400",
+              },
+              {
+                id: 6,
+                title: "HTML5 e CSS3 - Módulo 1",
+                platform: "Curso em Vídeo",
+                description:
+                  "Fundamentos de HTML5 e CSS3 com 40 horas de conteúdo prático",
+                date: "Emitido em out 2023",
+                bgColor: "bg-green-600/20",
+                iconColor: "text-green-500",
+                dateColor: "text-cyan-400",
+                code: "CDC2F-C9E9-4",
+              },
+              {
+                id: 7,
+                title: "HTML5 e CSS3 - Módulo 2",
+                platform: "Curso em Vídeo",
+                description:
+                  "HTML5 e CSS3 avançado com mais 40 horas de conteúdo prático",
+                date: "Emitido em out 2023",
+                bgColor: "bg-green-600/20",
+                iconColor: "text-green-500",
+                dateColor: "text-cyan-400",
+                code: "CDC2F-E776-6",
+              },
+              {
+                id: 8,
+                title: "Curso PHP",
+                platform: "Curso em Vídeo",
+                description:
+                  "Fundamentos de programação PHP para desenvolvimento web back-end",
+                date: "Emitido em 2023",
+                bgColor: "bg-purple-600/20",
+                iconColor: "text-purple-500",
+                dateColor: "text-cyan-400",
+              },
+              {
+                id: 9,
+                title: "Novas Certificações",
+                platform: "Em Andamento",
+                description:
+                  "Continuo me especializando com novos cursos e certificações",
+                date: "Em progresso",
+                bgColor: "bg-yellow-600/20",
+                iconColor: "text-yellow-500",
+                dateColor: "text-yellow-400",
+              },
+            ],
             mobileMenuOpen: false,
             isMobile: false,
             touchStartTime: 0,
