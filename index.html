@@ -13,6 +13,36 @@
    <link rel="stylesheet" href="assets/index.css">
   </head>
   <body class="bg-gray-900 text-white" id="app">
+    <!-- Substitua a seção do background atual -->
+<div class="absolute inset-0 transition-all duration-1000 ease-in-out">
+  <!-- Background Principal (atual) -->
+  <div 
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+    :style="{
+      'background-image': `url(${backgrounds[currentBackground].url})`,
+      'opacity': backgrounds[currentBackground].opacity / 100
+    }"
+  ></div>
+  
+  <!-- Background Próximo (para transição mais suave) -->
+  <div 
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+    :style="{
+      'background-image': `url(${backgrounds[(currentBackground + 1) % backgrounds.length].url})`,
+      'opacity': 0
+    }"
+    :class="{ 'opacity-0': true }"
+  ></div>
+  
+  <!-- Overlay Gradiente Fixo -->
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-blue-900/30 to-gray-900/70"></div>
+  
+  <!-- Elementos decorativos (mantenha os seus) -->
+  <div class="absolute inset-0 opacity-30">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+  </div>
+</div>
     <!-- Context Menu -->
     <div
       v-if="contextMenu.visible && !isMobile"

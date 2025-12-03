@@ -3,6 +3,47 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
+        backgrounds: [
+      {
+        id: 1,
+        name: "Código",
+        url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920&q=80",
+        opacity: 30
+      },
+      {
+        id: 2,
+        name: "Moderno",
+        url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+        opacity: 40
+      },
+      {
+        id: 3,
+        name: "Abstrato",
+        url: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&q=80",
+        opacity: 25
+      },
+      {
+        id: 4,
+        name: "Escritório",
+        url: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1920&q=80",
+        opacity: 35
+      },
+      {
+        id: 5,
+        name: "Tecnologia",
+        url: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=1920&q=80",
+        opacity: 30
+      },
+      {
+        id: 6,
+        name: "Futurista",
+        url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+        opacity: 35
+      }
+    ],
+    currentBackground: 0,
+    backgroundInterval: null,
+    backgroundAutoChange: true, 
       isDarkMode: true,
       currentTime: "00:00",
       currentDate: "01/01/2025",
@@ -89,7 +130,6 @@ createApp({
           iconColor: "text-purple-500",
           dateColor: "text-cyan-400",
         },
-       
       ],
       mobileMenuOpen: false,
       isMobile: false,
@@ -143,7 +183,7 @@ createApp({
       },
     };
   },
-  
+
   mounted() {
     this.updateClock();
     this.clockInterval = setInterval(this.updateClock, 1000);
@@ -155,14 +195,47 @@ createApp({
     this.checkMobile();
     window.addEventListener("resize", this.checkMobile);
     this.loadTheme();
+     this.startBackgroundRotation();
+
+    this.preloadBackgroundImages();
   },
-  
+
   beforeUnmount() {
     if (this.clockInterval) clearInterval(this.clockInterval);
     window.removeEventListener("resize", this.checkMobile);
+      this.stopBackgroundRotation();
+  },
+
+  methods: {
+    startBackgroundRotation() {
+    if (this.backgroundInterval) {
+      clearInterval(this.backgroundInterval);
+    }
+    
+    this.backgroundInterval = setInterval(() => {
+      this.currentBackground = (this.currentBackground + 1) % this.backgrounds.length;
+    }, 10000);
   },
   
-  methods: {
+  stopBackgroundRotation() {
+    if (this.backgroundInterval) {
+      clearInterval(this.backgroundInterval);
+      this.backgroundInterval = null;
+    }
+  },
+  
+  toggleBackgroundRotation() {
+    this.backgroundAutoChange = !this.backgroundAutoChange;
+    if (this.backgroundAutoChange) {
+      this.startBackgroundRotation();
+    } else {
+      this.stopBackgroundRotation();
+    }
+  },
+  
+  changeBackground(index) {
+    this.currentBackground = index;
+  },
     updateClock() {
       const now = new Date();
       this.currentTime = now.toLocaleTimeString("pt-BR", {
@@ -175,7 +248,7 @@ createApp({
         year: "numeric",
       });
     },
-    
+
     openApp(appId) {
       const app = this.apps[appId];
       if (!app) return;
@@ -213,7 +286,7 @@ createApp({
       this.closeContextMenu();
       this.mobileMenuOpen = false;
     },
-    
+
     focusWindow(windowId) {
       // CORREÇÃO: Usar 'win' em vez de 'window'
       const win = this.windows.find((w) => w.id === windowId);
@@ -224,13 +297,13 @@ createApp({
       win.zIndex = maxZ + 1;
       this.windows.sort((a, b) => a.zIndex - b.zIndex);
     },
-    
+
     minimizeWindow(windowId) {
       // CORREÇÃO: Usar 'win' em vez de 'window'
       const win = this.windows.find((w) => w.id === windowId);
       if (win) win.minimized = !win.minimized;
     },
-    
+
     maximizeWindow(windowId) {
       // CORREÇÃO: Usar 'win' em vez de 'window' e salvar dimensões da tela
       const win = this.windows.find((w) => w.id === windowId);
@@ -247,11 +320,11 @@ createApp({
         }
       }
     },
-    
+
     closeWindow(windowId) {
       this.windows = this.windows.filter((w) => w.id !== windowId);
     },
-    
+
     toggleWindow(windowId) {
       // CORREÇÃO: Usar 'win' em vez de 'window'
       const win = this.windows.find((w) => w.id === windowId);
@@ -260,8 +333,9 @@ createApp({
         if (!win.minimized) this.focusWindow(windowId);
       }
     },
-    
-    startDrag(win, event) { // Parâmetro já é 'win'
+
+    startDrag(win, event) {
+      // Parâmetro já é 'win'
       if (this.isMobile) return;
 
       event.preventDefault();
@@ -287,8 +361,9 @@ createApp({
       document.addEventListener("mousemove", onMove);
       document.addEventListener("mouseup", onUp);
     },
-    
-    startTouchDrag(win, event) { // Parâmetro já é 'win'
+
+    startTouchDrag(win, event) {
+      // Parâmetro já é 'win'
       if (!this.isMobile) return;
 
       event.preventDefault();
@@ -317,14 +392,17 @@ createApp({
       document.addEventListener("touchmove", onMove, { passive: false });
       document.addEventListener("touchend", onEnd);
     },
-    
+
     toggleTheme() {
       this.isDarkMode = !this.isDarkMode;
       document.documentElement.classList.toggle("dark", this.isDarkMode);
       document.documentElement.classList.toggle("light", !this.isDarkMode);
-      localStorage.setItem("portfolio-theme", this.isDarkMode ? "dark" : "light");
+      localStorage.setItem(
+        "portfolio-theme",
+        this.isDarkMode ? "dark" : "light"
+      );
     },
-    
+
     loadTheme() {
       const savedTheme = localStorage.getItem("portfolio-theme");
       if (savedTheme) {
@@ -333,7 +411,7 @@ createApp({
         document.documentElement.classList.toggle("light", !this.isDarkMode);
       }
     },
-    
+
     showContextMenu(event) {
       if (this.isMobile) return;
 
@@ -343,11 +421,11 @@ createApp({
         y: event.clientY,
       };
     },
-    
+
     closeContextMenu() {
       this.contextMenu.visible = false;
     },
-    
+
     refreshDesktop() {
       this.closeContextMenu();
       const activeWindow = this.windows.find((w) => !w.minimized);
@@ -355,7 +433,7 @@ createApp({
         this.focusWindow(activeWindow.id);
       }
     },
-    
+
     openAllApps() {
       Object.keys(this.apps).forEach((appId) => {
         if (!this.windows.find((w) => w.appId === appId)) {
@@ -365,15 +443,16 @@ createApp({
       this.closeContextMenu();
       this.mobileMenuOpen = false;
     },
-    
+
     checkMobile() {
       const screenWidth = window.innerWidth; // Salva em variável
       const screenHeight = window.innerHeight;
-      
-    //   this.isMobile = screenWidth <= 768;
+
+      //   this.isMobile = screenWidth <= 768;
 
       if (this.isMobile) {
-        this.windows.forEach((win) => { // Usar 'win' para clareza
+        this.windows.forEach((win) => {
+          // Usar 'win' para clareza
           if (!win.maximized) {
             win.width = screenWidth - 20; // Usa variável
             win.height = screenHeight - 150; // Usa variável
@@ -381,7 +460,7 @@ createApp({
         });
       }
     },
-    
+
     toggleMobileMenu() {
       this.mobileMenuOpen = !this.mobileMenuOpen;
     },
